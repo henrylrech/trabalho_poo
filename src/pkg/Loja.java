@@ -13,6 +13,27 @@ public class Loja {
 		this.quantosProdutos = 0;
 	}
 
+	private int BuscaIndice(int id, char tipo){
+		int indice = 0;
+		if (tipo == 'F') {
+			for (int i = 0; i < this.quantosFornecedores; i++) {
+				if (this.fornecedores[i].getId() == id) {
+					return indice;
+				}
+			}
+		}
+		else if (tipo == 'P') {
+			for (int i = 0; i < this.quantosProdutos; i++) {
+				if (this.produtos[i].getId() == id) {
+					return indice;
+				}
+			}
+		}
+
+		return -1;
+
+	}
+
 	//
 	// FORNECEDORES
 	//
@@ -23,8 +44,10 @@ public class Loja {
 		System.out.println("Fornecedor " + f.getNome() + " incluido!");
 	}
 	
-	public void ExcluirFornecedor(int indice) {
-		System.out.println("Excluindo fornecedor (" + indice + ") com nome (" + this.fornecedores[indice].getNome() + ")");
+	public void ExcluirFornecedor(int id) {
+		int indice = BuscaIndice(id, 'F');
+
+		System.out.println("Excluindo fornecedor (" + id + ") com nome (" + this.fornecedores[indice].getNome() + ")");
 		Fornecedor[] novo_array = new Fornecedor[100];
 		for (int i = 0, j = 0; i < this.quantosFornecedores; i++) {
             if (i != indice) {
@@ -35,22 +58,25 @@ public class Loja {
 		this.quantosFornecedores--;
 		System.out.println("Fornecedor excluido!");
 	}
-	
+
 	public void MostraFornecedores() {
 		if (this.quantosFornecedores == 0) {
 			System.out.println("Nenhum fornecedor a ser exibido.");
 			return;
 		}
 		for (int i=0; i<this.quantosFornecedores; i++) {
+			int id = this.fornecedores[i].getId();
 			String nome = this.fornecedores[i].getNome();
 			String desc = this.fornecedores[i].getDesc();
 			String tel = this.fornecedores[i].getTelefone();
 			String email = this.fornecedores[i].getEmail();
-			System.out.println(i + " - Nome: " + nome + ", Descricao: " + desc + ", Telefone: " + tel + ", Email: " + email);
+			System.out.println(id + " - Nome: " + nome + ", Descricao: " + desc + ", Telefone: " + tel + ", Email: " + email);
 		}
 	}
 
-	public void MostraFornecedores(int indice) {
+	public void MostraFornecedores(int id) {
+		int indice = BuscaIndice(id, 'F');
+
 		if (this.quantosFornecedores == 0) {
 			System.out.println("Nenhum fornecedor a ser exibido.");
 			return;
@@ -67,10 +93,11 @@ public class Loja {
 		for (int i=0; i<this.quantosFornecedores; i++) {
 			String nome = this.fornecedores[i].getNome();
 			if (nome.contains(busca)){
+				int id = this.fornecedores[i].getId();
 				String desc = this.fornecedores[i].getDesc();
 				String tel = this.fornecedores[i].getTelefone();
 				String email = this.fornecedores[i].getEmail();
-				System.out.println(i + " - Nome: " + nome + ", Descricao: " + desc + ", Telefone: " + tel + ", Email: " + email);
+				System.out.println(id + " - Nome: " + nome + ", Descricao: " + desc + ", Telefone: " + tel + ", Email: " + email);
 			}
 
 		}
@@ -80,11 +107,13 @@ public class Loja {
 		return quantosFornecedores;
 	}
 
-	public Fornecedor getFornecedor(int indice){
+	public Fornecedor getFornecedor(int id){
+		int indice = BuscaIndice(id, 'F');
 		return this.fornecedores[indice];
 	}
 
-	public void setFornecedor(int indice, Fornecedor temp){
+	public void setFornecedor(int id, Fornecedor temp){
+		int indice = BuscaIndice(id, 'F');
 		this.fornecedores[indice] = temp;
 	}
 
@@ -93,17 +122,9 @@ public class Loja {
 	//
 
 	public void EditaEstoqueProduto(int id, float quantidade) {
-		int indice = 0;
-		boolean achou = false;
-		for (int i = 0; i < this.quantosProdutos; i++) {
-			if (this.produtos[i].getId() == id) {
-				indice = i;
-				achou = true;
-				break;
-			}
-		}
+		int indice = BuscaIndice(id, 'P');
 
-		if (achou == false){
+		if (indice == -1){
 			System.out.println("Erro. Não foi encontrado produto com ID " + id);
 			return;
 		}
@@ -124,8 +145,10 @@ public class Loja {
 		System.out.println("Produto " + p.getNome() + " incluido!");
 	}
 
-	public void ExcluirProduto(int indice) {
-		System.out.println("Excluindo produto (" + indice + ") com nome (" + this.produtos[indice].getNome() + ")");
+	public void ExcluirProduto(int id) {
+		int indice = BuscaIndice(id, 'P');
+
+		System.out.println("Excluindo produto (" + id + ") com nome (" + this.produtos[indice].getNome() + ")");
 		Produto[] novo_array = new Produto[100];
 		for (int i = 0, j = 0; i < this.quantosProdutos; i++) {
 			if (i != indice) {
@@ -185,7 +208,13 @@ public class Loja {
 
 	public int getQuantosProdutos() { return quantosProdutos; }
 
-	public Produto getProduto(int indice) { return this.produtos[indice]; }
+	public Produto getProduto(int id) {
+		int indice = BuscaIndice(id, 'P');
+		return this.produtos[indice];
+	}
 
-	public void setProduto(int indice, Produto temp) { this.produtos[indice] = temp; }
+	public void setProduto(int id, Produto temp) {
+		int indice = BuscaIndice(id, 'F');
+		this.produtos[indice] = temp;
+	}
 }

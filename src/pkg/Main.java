@@ -8,19 +8,45 @@ public class Main {
 	
 	public static void main(String[] args) {
 		Main main = new Main();
-
+		main.Inicia();
 		main.MostraMenu();
 	}
-	
+
+	public void Inicia() {
+		loja.IncluiFornecedor(new Fornecedor("Henry","Fornecedor","99999999","email@email.com"));
+		loja.IncluiProduto(new Produto("Café", "Café Preto", 100, 1));
+	}
+
 	public void MostraMenu() {
 		int opcao = 0;
 		sc = new Scanner(System.in);
 
-		Fornecedor f = new Fornecedor("Henry","Fornecedor","99999999","email@email.com");
-		Produto p = new Produto("Café", "Café Preto", 100, 0);
+		do {
+			System.out.println("Escolha a opção:");
+			System.out.println(" 1 - Menu Fornecedor");
+			System.out.println(" 2 - Menu Produtos");
+			System.out.println(" 0 - Sair ");
+			opcao = sc.nextInt();
+			sc.nextLine();
+			switch (opcao) {
+				case 1:
+					MostraMenuFornecedor();
+					break;
+				case 2:
+					MostraMenuProdutos();
+					break;
+				case 0:
+					System.out.println("Saindo...");
+					System.exit(0);
+			}
+			System.out.println("---------------------------------------------");
+		} while (opcao != 0);
+		sc.close();
+	}
 
-		loja.IncluiFornecedor(f);
-		loja.IncluiProduto(p);
+	public void MostraMenuFornecedor(){
+		int opcao = 0;
+		sc = new Scanner(System.in);
 
 		do {
 			System.out.println("Escolha a opção:");
@@ -28,11 +54,7 @@ public class Main {
 			System.out.println(" 2 - Editar fornecedor");
 			System.out.println(" 3 - Excluir fornecedor");
 			System.out.println(" 4 - Consultar fornecedores");
-			System.out.println(" 5 - Criar um produto");
-			System.out.println(" 6 - Editar produto");
-			System.out.println(" 7 - Excluir produto");
-			System.out.println(" 8 - Consultar produtos");
-			System.out.println(" 9 - Alterar estoque de produto");
+			System.out.println(" 5 - Voltar");
 			System.out.println(" 0 - Sair ");
 			opcao = sc.nextInt();
 			sc.nextLine();
@@ -50,26 +72,57 @@ public class Main {
 					ConsultaFornecedores();
 					break;
 				case 5:
-					CriaProduto();
-					break;
-				case 6:
-					EditaProduto();
-					break;
-				case 7:
-					ExcluiProduto();
-					break;
-				case 8:
-					ConsultaProdutos();
-					break;
-				case 9:
-					EditaEstoque();
+					MostraMenu();
 					break;
 				case 0:
 					System.out.println("Saindo...");
 					System.exit(0);
 			}
 			System.out.println("---------------------------------------------");
-		} while (opcao != 0);
+		} while (opcao != 5 && opcao != 0);
+		sc.close();
+	}
+
+	public void MostraMenuProdutos(){
+		int opcao = 0;
+		sc = new Scanner(System.in);
+
+		do {
+			System.out.println("Escolha a opção:");
+			System.out.println(" 1 - Criar um produto");
+			System.out.println(" 2 - Editar produto");
+			System.out.println(" 3 - Excluir produto");
+			System.out.println(" 4 - Consultar produtos");
+			System.out.println(" 5 - Alterar estoque de produto");
+			System.out.println(" 6 - Voltar");
+			System.out.println(" 0 - Sair ");
+			opcao = sc.nextInt();
+			sc.nextLine();
+			switch (opcao) {
+				case 1:
+					CriaProduto();
+					break;
+				case 2:
+					EditaProduto();
+					break;
+				case 3:
+					ExcluiProduto();
+					break;
+				case 4:
+					ConsultaProdutos();
+					break;
+				case 5:
+					EditaEstoque();
+					break;
+				case 6:
+					MostraMenu();
+					break;
+				case 0:
+					System.out.println("Saindo...");
+					System.exit(0);
+			}
+			System.out.println("---------------------------------------------");
+		} while (opcao != 6 && opcao != 0);
 		sc.close();
 	}
 
@@ -97,11 +150,11 @@ public class Main {
 		
 		loja.MostraFornecedores();
 		System.out.println("---------------------------------------------");
-		System.out.println("Deseja editar o fornecedor com qual indice?");
-		int indice = sc.nextInt();
+		System.out.println("Deseja editar o fornecedor com qual id?");
+		int id = sc.nextInt();
 		
-		if (indice < 0 || indice > loja.getQuantosFornecedores()) {
-			System.out.println("Indice inválido.");
+		if (id < 0 || id > loja.getQuantosFornecedores()) {
+			System.out.println("Id inválido.");
 			sc.nextLine();
 			return;
 		}
@@ -120,7 +173,7 @@ public class Main {
 			return;
 		}
 
-		Fornecedor temp = loja.getFornecedor(indice);
+		Fornecedor temp = loja.getFornecedor(id);
 		switch (opcao) {
 		case 1:
 			System.out.println("Digite o nome novo: ");
@@ -152,7 +205,7 @@ public class Main {
 			break;
 		}
 
-		loja.setFornecedor(indice, temp);
+		loja.setFornecedor(id, temp);
 
 		sc.nextLine();
 	}
@@ -166,16 +219,16 @@ public class Main {
 		
 		loja.MostraFornecedores();
 		System.out.println("---------------------------------------------");
-		System.out.println("Deseja excluir o fornecedor com qual indice?");
-		int indice = sc.nextInt();
+		System.out.println("Deseja excluir o fornecedor com qual id?");
+		int id = sc.nextInt();
 		
-		if (indice < 0 || indice > loja.getQuantosFornecedores()) {
-			System.out.println("Indice inválido.");
+		if (id < 0 || id > loja.getQuantosFornecedores()) {
+			System.out.println("Id inválido.");
 			sc.nextLine();
 			return;
 		}
 		
-		loja.ExcluirFornecedor(indice);
+		loja.ExcluirFornecedor(id);
 		sc.nextLine();
 	}
 
@@ -184,7 +237,7 @@ public class Main {
 		System.out.println("Escolha a opção");
 		System.out.println("1 - Mostrar todos");
 		System.out.println("2 - Filtrar por nome");
-		System.out.println("3 - Filtrar por índice");
+		System.out.println("3 - Filtrar por id");
 		int opcao = sc.nextInt();
 		sc.nextLine();
 		switch (opcao) {
@@ -197,9 +250,9 @@ public class Main {
 				loja.MostraFornecedores(busca);
 				break;
 			case 3:
-				System.out.println("Escolha o índice a ser buscado: ");
-				int indice = sc.nextInt();
-				loja.MostraFornecedores(indice);
+				System.out.println("Escolha o id a ser buscado: ");
+				int id = sc.nextInt();
+				loja.MostraFornecedores(id);
 				break;
 		}
 
@@ -242,11 +295,11 @@ public class Main {
 
 		loja.MostraProdutos();
 		System.out.println("---------------------------------------------");
-		System.out.println("Deseja editar o produto com qual indice?");
-		int indice = sc.nextInt();
+		System.out.println("Deseja editar o produto com qual id?");
+		int id = sc.nextInt();
 
-		if (indice < 0 || indice > loja.getQuantosFornecedores()) {
-			System.out.println("Indice inválido.");
+		if (id < 0 || id > loja.getQuantosFornecedores()) {
+			System.out.println("Id inválido.");
 			sc.nextLine();
 			return;
 		}
@@ -264,7 +317,7 @@ public class Main {
 			return;
 		}
 
-		Produto temp = loja.getProduto(indice);
+		Produto temp = loja.getProduto(id);
 
 		switch (opcao) {
 			case 1:
@@ -283,18 +336,18 @@ public class Main {
 				break;
 			case 3:
 				loja.MostraFornecedores();
-				System.out.println("Digite o id novo: ");
-				int id = sc.nextInt();
-				while (id < 0 || id > loja.getQuantosFornecedores() - 1) {
-					System.out.println("Indice de fornecedor inválido. Digite novamente. ");
-					id = sc.nextInt();
+				System.out.println("Digite o id de fornecedor novo: ");
+				int id_fornecedor = sc.nextInt();
+				while (id_fornecedor < 0 || id_fornecedor > loja.getQuantosFornecedores() - 1) {
+					System.out.println("Id de fornecedor inválido. Digite novamente. ");
+					id_fornecedor = sc.nextInt();
 				}
-				temp.setId_fornecedor(id);
-				System.out.println("Id atualizado!");
+				temp.setId_fornecedor(id_fornecedor);
+				System.out.println("Id de fornecedor atualizado!");
 				break;
 		}
 
-		loja.setProduto(indice, temp);
+		loja.setProduto(id, temp);
 
 		sc.nextLine();
 	}
@@ -308,16 +361,16 @@ public class Main {
 
 		loja.MostraFornecedores();
 		System.out.println("---------------------------------------------");
-		System.out.println("Deseja excluir o produto com qual indice?");
-		int indice = sc.nextInt();
+		System.out.println("Deseja excluir o produto com qual id?");
+		int id = sc.nextInt();
 
-		if (indice < 0 || indice > loja.getQuantosProdutos()) {
-			System.out.println("Indice inválido.");
+		if (id < 0 || id > loja.getQuantosProdutos()) {
+			System.out.println("Id inválido.");
 			sc.nextLine();
 			return;
 		}
 
-		loja.ExcluirProduto(indice);
+		loja.ExcluirProduto(id);
 		sc.nextLine();
 	}
 
@@ -361,7 +414,7 @@ public class Main {
 		int id = sc.nextInt();
 
 		System.out.println("Escolha a opção");
-		System.out.println("1 - Adicionar do estoque");
+		System.out.println("1 - Adicionar ao estoque");
 		System.out.println("2 - Remover do estoque");
 		int opcao = sc.nextInt();
 		sc.nextLine();
