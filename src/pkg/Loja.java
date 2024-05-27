@@ -13,27 +13,6 @@ public class Loja {
 		this.quantosProdutos = 0;
 	}
 
-	private int BuscaIndice(int id, char tipo){
-		int indice = 0;
-		if (tipo == 'F') {
-			for (int i = 0; i < this.quantosFornecedores; i++) {
-				if (this.fornecedores[i].getId() == id) {
-					return indice;
-				}
-			}
-		}
-		else if (tipo == 'P') {
-			for (int i = 0; i < this.quantosProdutos; i++) {
-				if (this.produtos[i].getId() == id) {
-					return indice;
-				}
-			}
-		}
-
-		return -1;
-
-	}
-
 	//
 	// FORNECEDORES
 	//
@@ -70,7 +49,7 @@ public class Loja {
 			String desc = this.fornecedores[i].getDesc();
 			String tel = this.fornecedores[i].getTelefone();
 			String email = this.fornecedores[i].getEmail();
-			System.out.println(id + " - Nome: " + nome + ", Descricao: " + desc + ", Telefone: " + tel + ", Email: " + email);
+			System.out.println("Id: " + id + " - Nome: " + nome + ", Descricao: " + desc + ", Telefone: " + tel + ", Email: " + email);
 		}
 	}
 
@@ -82,7 +61,7 @@ public class Loja {
 			return;
 		}
 		Fornecedor f = this.fornecedores[indice];
-		System.out.println(indice + " - Nome: " + f.getNome() + ", Descricao: " + f.getDesc() + ", Telefone: " + f.getTelefone() + ", Email: " + f.getEmail());
+		System.out.println("Id:" + f.getId() + " - Nome: " + f.getNome() + ", Descricao: " + f.getDesc() + ", Telefone: " + f.getTelefone() + ", Email: " + f.getEmail());
 	}
 
 	public void MostraFornecedores(String busca) {
@@ -92,12 +71,12 @@ public class Loja {
 		}
 		for (int i=0; i<this.quantosFornecedores; i++) {
 			String nome = this.fornecedores[i].getNome();
-			if (nome.contains(busca)){
+			if (nome.toLowerCase().contains(busca.toLowerCase())){
 				int id = this.fornecedores[i].getId();
 				String desc = this.fornecedores[i].getDesc();
 				String tel = this.fornecedores[i].getTelefone();
 				String email = this.fornecedores[i].getEmail();
-				System.out.println(id + " - Nome: " + nome + ", Descricao: " + desc + ", Telefone: " + tel + ", Email: " + email);
+				System.out.println("Id: " + id + " - Nome: " + nome + ", Descricao: " + desc + ", Telefone: " + tel + ", Email: " + email);
 			}
 
 		}
@@ -197,11 +176,12 @@ public class Loja {
 		}
 		for (int i=0; i<this.quantosProdutos; i++) {
 			String nome = this.produtos[i].getNome();
-			if (nome.contains(busca)){
+			if (nome.toLowerCase().contains(busca.toLowerCase())){
 				int id = this.produtos[i].getId();
 				String desc = this.produtos[i].getDesc();
 				float estoque = this.produtos[i].getEstoque();
-				System.out.println("Id: " + id + " - Nome: " + nome + ", Descricao: " + desc + ", Estoque: " + estoque);
+				int id_fornecedor = this.fornecedores[BuscaIndice(this.produtos[i].getIdFornecedor(), 'F')].getId();
+				System.out.println("Id: " + id + " - Nome: " + nome + ", Descricao: " + desc + ", Estoque: " + estoque + ", ID Fornecedor: " + id_fornecedor);
 			}
 		}
 	}
@@ -216,5 +196,49 @@ public class Loja {
 	public void setProduto(int id, Produto temp) {
 		int indice = BuscaIndice(id, 'F');
 		this.produtos[indice] = temp;
+	}
+	
+	//
+	// UTILITARIOS
+	//
+	
+	private int BuscaIndice(int id, char tipo){
+		int indice = 0;
+		if (tipo == 'F') {
+			for (int i = 0; i < this.quantosFornecedores; i++) {
+				if (this.fornecedores[i].getId() == id) {
+					return indice;
+				}
+			}
+		}
+		else if (tipo == 'P') {
+			for (int i = 0; i < this.quantosProdutos; i++) {
+				if (this.produtos[i].getId() == id) {
+					return indice;
+				}
+			}
+		}
+
+		return -1;
+	}
+	
+	public boolean IdValido(int id, char tipo) {
+		
+		if (tipo == 'F') {
+			for(int i=0; i<this.quantosFornecedores; i++) {
+				if (this.fornecedores[i].getId() == id) {
+					return true;
+				}
+			}
+		}
+		else if (tipo == 'P') {
+			for(int i=0; i<this.quantosProdutos; i++) {
+				if (this.produtos[i].getId() == id) {
+					return true;
+				}
+			}
+		}
+		
+		return false;
 	}
 }

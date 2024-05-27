@@ -1,4 +1,5 @@
 package pkg;
+import java.lang.String;
 import java.util.Scanner;
 
 public class Main {
@@ -153,7 +154,7 @@ public class Main {
 		System.out.println("Deseja editar o fornecedor com qual id?");
 		int id = sc.nextInt();
 		
-		if (id < 0 || id > loja.getQuantosFornecedores()) {
+		if (loja.IdValido(id, 'F')) {
 			System.out.println("Id inválido.");
 			sc.nextLine();
 			return;
@@ -203,6 +204,9 @@ public class Main {
 			temp.setEmail(email);
 			System.out.println("Email atualizado!");
 			break;
+		default:
+			System.out.println("Opção inválida.");
+			return;
 		}
 
 		loja.setFornecedor(id, temp);
@@ -222,7 +226,7 @@ public class Main {
 		System.out.println("Deseja excluir o fornecedor com qual id?");
 		int id = sc.nextInt();
 		
-		if (id < 0 || id > loja.getQuantosFornecedores()) {
+		if (loja.IdValido(id, 'F') == false) {
 			System.out.println("Id inválido.");
 			sc.nextLine();
 			return;
@@ -254,6 +258,9 @@ public class Main {
 				int id = sc.nextInt();
 				loja.MostraFornecedores(id);
 				break;
+			default:
+				System.out.println("Opção inválida.");
+				return;
 		}
 
 		sc.nextLine();
@@ -276,7 +283,7 @@ public class Main {
 		System.out.println("Diga o indice do fornecedor responsável: ");
 		int id_forn = sc.nextInt();
 
-		while (id_forn < 0 || id_forn > loja.getQuantosFornecedores() - 1) {
+		while (loja.IdValido(id_forn, 'F') == false) {
 			System.out.println("Indice de fornecedor inválido. Digite novamente. ");
 			id_forn = sc.nextInt();
 		}
@@ -298,7 +305,7 @@ public class Main {
 		System.out.println("Deseja editar o produto com qual id?");
 		int id = sc.nextInt();
 
-		if (id < 0 || id > loja.getQuantosFornecedores()) {
+		if (loja.IdValido(id, 'P') == false) {
 			System.out.println("Id inválido.");
 			sc.nextLine();
 			return;
@@ -338,13 +345,16 @@ public class Main {
 				loja.MostraFornecedores();
 				System.out.println("Digite o id de fornecedor novo: ");
 				int id_fornecedor = sc.nextInt();
-				while (id_fornecedor < 0 || id_fornecedor > loja.getQuantosFornecedores() - 1) {
+				while (loja.IdValido(id_fornecedor, 'F') == false) {
 					System.out.println("Id de fornecedor inválido. Digite novamente. ");
 					id_fornecedor = sc.nextInt();
 				}
 				temp.setId_fornecedor(id_fornecedor);
 				System.out.println("Id de fornecedor atualizado!");
 				break;
+			default:
+				System.out.println("Opção inválida.");
+				return;
 		}
 
 		loja.setProduto(id, temp);
@@ -364,7 +374,7 @@ public class Main {
 		System.out.println("Deseja excluir o produto com qual id?");
 		int id = sc.nextInt();
 
-		if (id < 0 || id > loja.getQuantosProdutos()) {
+		if (loja.IdValido(id, 'P') == false) {
 			System.out.println("Id inválido.");
 			sc.nextLine();
 			return;
@@ -395,8 +405,16 @@ public class Main {
 			case 3:
 				System.out.println("Escolha o id a ser buscado: ");
 				int id = sc.nextInt();
+				while (loja.IdValido(id, 'P') == false) {
+					System.out.println("Id inválido.");
+					id = sc.nextInt();
+				}
+				
 				loja.MostraProdutos(id);
 				break;
+			default:
+				System.out.println("Opção inválida.");
+				return;
 		}
 
 		sc.nextLine();
@@ -412,6 +430,11 @@ public class Main {
 		loja.MostraProdutos();
 		System.out.println("Digite o ID do produto: ");
 		int id = sc.nextInt();
+		
+		while (loja.IdValido(id, 'P') == false) {
+			System.out.println("Id inválido");
+			id = sc.nextInt();
+		}
 
 		System.out.println("Escolha a opção");
 		System.out.println("1 - Adicionar ao estoque");
@@ -431,7 +454,10 @@ public class Main {
 				quantidade = sc.nextFloat();
 				quantidade = quantidade * -1;
 				loja.EditaEstoqueProduto(id, quantidade);
-				break;
+			default:
+				System.out.println("Opção inválida.");
+				return;
+			
 		}
 	}
 }

@@ -39,5 +39,7 @@ public class Produto {
     public void setId_fornecedor(int id_fornecedor) { this.id_fornecedor = id_fornecedor; }
 
     public int getId() { return this.id; }
+    
+    public int getIdFornecedor() { return this.id_fornecedor; }
 
 }
