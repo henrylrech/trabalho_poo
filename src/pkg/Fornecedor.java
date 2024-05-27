@@ -1,20 +1,19 @@
 package pkg;
 
 public class Fornecedor {
-	String nome;
-	String desc;
-	String telefone;
-	String email;
-	
-	private Fornecedor() {
-	}
+	private static int count = 0;
+	private int id;
+	private String nome;
+	private String desc;
+	private String telefone;
+	private String email;
 	
 	public Fornecedor(String nome, String desc, String telefone, String email) {
-		this();
 		this.nome = nome;
 		this.desc = desc;
 		this.telefone = telefone;
 		this.email = email;
+		this.id = ++count;
 	}
 
 	public String getNome() {
