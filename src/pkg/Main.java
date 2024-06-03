@@ -13,13 +13,13 @@ public class Main {
 		main.MostraMenu();
 	}
 
-	public void Inicia() {
+	private void Inicia() {
 		Endereco e = new Endereco("Rua 1", 420, "Lagoinha", "12345-678", "Caxias do Sul", "RS");
 		loja.IncluiFornecedor(new Fornecedor("Henry","Fornecedor","99999999","email@email.com", e));
 		loja.IncluiProduto(new Produto("Café", "Café Preto", 100, 1));
 	}
 
-	public void MostraMenu() {
+	private void MostraMenu() {
 		int opcao = 0;
 		sc = new Scanner(System.in);
 
@@ -46,7 +46,7 @@ public class Main {
 		sc.close();
 	}
 
-	public void MostraMenuFornecedor(){
+	private void MostraMenuFornecedor(){
 		int opcao = 0;
 		sc = new Scanner(System.in);
 
@@ -85,7 +85,7 @@ public class Main {
 		sc.close();
 	}
 
-	public void MostraMenuProdutos(){
+	private void MostraMenuProdutos(){
 		int opcao = 0;
 		sc = new Scanner(System.in);
 
@@ -127,6 +127,10 @@ public class Main {
 		} while (opcao != 6 && opcao != 0);
 		sc.close();
 	}
+
+	//
+	// FORNECEDOR
+	//
 
 	private void CriaFornecedor() {
 		System.out.println("Diga o nome do fornecedor: ");
@@ -411,6 +415,10 @@ public class Main {
 
 		sc.nextLine();
 	}
+
+	//
+	// PRODUTO
+	//
 
 	private void CriaProduto() {
 		if (loja.getQuantosFornecedores() == 0) {
