@@ -7,13 +7,15 @@ public class Fornecedor {
 	private String desc;
 	private String telefone;
 	private String email;
+	private Endereco endereco;
 	
-	public Fornecedor(String nome, String desc, String telefone, String email) {
+	public Fornecedor(String nome, String desc, String telefone, String email, Endereco endereco) {
 		this.nome = nome;
 		this.desc = desc;
 		this.telefone = telefone;
 		this.email = email;
 		this.id = ++count;
+		this.endereco = endereco;
 	}
 	public int getId() { return id; }
 
