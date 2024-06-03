@@ -22,6 +22,27 @@ public class Loja {
 		this.quantosFornecedores++;
 		System.out.println("Fornecedor " + f.getNome() + " incluido!");
 	}
+
+	public void EditarFornecedor(int id, String campo, String novo_campo){
+		int indice = BuscaIndice(id, 'F');
+
+		if (campo.equals("nome")){
+			this.fornecedores[indice].setNome(novo_campo);
+			System.out.println("Nome atualizado!");
+		}
+		else if (campo.equals("desc")){
+			this.fornecedores[indice].setDesc(novo_campo);
+			System.out.println("Descricao atualizada!");
+		}
+		else if (campo.equals("telefone")){
+			this.fornecedores[indice].setTelefone(novo_campo);
+			System.out.println("Telefone atualizado!");
+		}
+		else if (campo.equals("email")){
+			this.fornecedores[indice].setEmail(novo_campo);
+			System.out.println("Email atualizado!");
+		}
+	}
 	
 	public void ExcluirFornecedor(int id) {
 		int indice = BuscaIndice(id, 'F');
@@ -61,7 +82,7 @@ public class Loja {
 			return;
 		}
 		Fornecedor f = this.fornecedores[indice];
-		System.out.println("Id:" + f.getId() + " - Nome: " + f.getNome() + ", Descricao: " + f.getDesc() + ", Telefone: " + f.getTelefone() + ", Email: " + f.getEmail());
+		System.out.println("Id: " + f.getId() + " - Nome: " + f.getNome() + ", Descricao: " + f.getDesc() + ", Telefone: " + f.getTelefone() + ", Email: " + f.getEmail());
 	}
 
 	public void MostraFornecedores(String busca) {
@@ -84,16 +105,6 @@ public class Loja {
 
 	public int getQuantosFornecedores() {
 		return quantosFornecedores;
-	}
-
-	public Fornecedor getFornecedor(int id){
-		int indice = BuscaIndice(id, 'F');
-		return this.fornecedores[indice];
-	}
-
-	public void setFornecedor(int id, Fornecedor temp){
-		int indice = BuscaIndice(id, 'F');
-		this.fornecedores[indice] = temp;
 	}
 
 	//
@@ -122,6 +133,28 @@ public class Loja {
 		this.produtos[this.quantosProdutos] = p;
 		this.quantosProdutos++;
 		System.out.println("Produto " + p.getNome() + " incluido!");
+	}
+
+	public void EditarProduto(int id, String campo, String novo_campo){
+		int indice = BuscaIndice(id, 'P');
+
+		if (campo.equals("nome")){
+			this.produtos[indice].setNome(novo_campo);
+			System.out.println("Nome atualizado!");
+		}
+		else if (campo.equals("descricao")){
+			this.produtos[indice].setDesc(novo_campo);
+			System.out.println("Descricao atualizada!");
+		}
+	}
+
+	public void EditarProduto(int id, String campo, int novo_campo){
+		int indice = BuscaIndice(id, 'P');
+
+		if (campo.equals("id_fornecedor")){
+			this.produtos[indice].setId_fornecedor(novo_campo);
+			System.out.println("Id de fornecedor atualizado!");
+		}
 	}
 
 	public void ExcluirProduto(int id) {
@@ -187,16 +220,6 @@ public class Loja {
 	}
 
 	public int getQuantosProdutos() { return quantosProdutos; }
-
-	public Produto getProduto(int id) {
-		int indice = BuscaIndice(id, 'P');
-		return this.produtos[indice];
-	}
-
-	public void setProduto(int id, Produto temp) {
-		int indice = BuscaIndice(id, 'F');
-		this.produtos[indice] = temp;
-	}
 	
 	//
 	// UTILITARIOS
