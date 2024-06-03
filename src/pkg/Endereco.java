@@ -16,16 +16,32 @@ public class Endereco {
         this.cidade = cidade;
         this.estado = estado;
     }
-    public String getCidade(){
-        return this.cidade;
+
+    public void setRua(String rua){
+        this.rua = rua;
     }
-    public String MostrarEnderecoCompleto(){
-        return "Endereco: \n"
-                + "Rua: " + this.rua + "\n"
-                + "Numero: " + this.numero + "\n"
-                + "Bairro: " + this.bairro + "\n"
-                + "Cep: " + this.cep + "\n"
-                + "Cidade: " + this.cidade + "\n"
-                + "Estado: " + this.estado + "\n";
+
+    public void setNumero(int numero){
+        this.numero = numero;
+    }
+
+    public void setBairro(String bairro){
+        this.bairro = bairro;
+    }
+
+    public void setCep(String cep) {
+        this.cep = cep;
+    }
+
+    public void setCidade(String cidade){
+        this.cidade = cidade;
+    }
+
+    public void setEstado(String estado){
+        this.estado = estado;
+    }
+
+    public String MostrarEnderecoFormatado(){
+        return this.rua + ", " + this.numero + ", " + this.bairro + ", " + this.cidade + ", " + this.estado + ", " + this.cep;
     }
 }

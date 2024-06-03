@@ -26,25 +26,58 @@ public class Loja {
 	public void EditarFornecedor(int id, String campo, String novo_campo){
 		int indice = BuscaIndice(id, 'F');
 
-		if (campo.equals("nome")){
-			this.fornecedores[indice].setNome(novo_campo);
-			System.out.println("Nome atualizado!");
-			return;
+		switch (campo){
+			case "nome":
+				this.fornecedores[indice].setNome(novo_campo);
+				System.out.println("Nome atualizado!");
+				return;
+			case "desc":
+				this.fornecedores[indice].setDesc(novo_campo);
+				System.out.println("Descrição atualizada!");
+				return;
+			case "telefone":
+				this.fornecedores[indice].setTelefone(novo_campo);
+				System.out.println("Telefone atualizado!");
+				return;
+			case "email":
+				this.fornecedores[indice].setEmail(novo_campo);
+				System.out.println("Email atualizado!");
+				return;
+			case "rua":
+				this.fornecedores[indice].setRua(novo_campo);
+				System.out.println("Rua atualizada!");
+				return;
+			case "bairro":
+				this.fornecedores[indice].setBairro(novo_campo);
+				System.out.println("Bairro atualizado!");
+				return;
+			case "cep":
+				this.fornecedores[indice].setCep(novo_campo);
+				System.out.println("CEP atualizado!");
+				return;
+			case "cidade":
+				this.fornecedores[indice].setCidade(novo_campo);
+				System.out.println("Cidade atualizada!");
+				return;
+			case "estado":
+				this.fornecedores[indice].setEstado(novo_campo);
+				System.out.println("Estado atualizado!");
+				return;
+			default:
+				System.out.println("Campo inválido, erro ao atualizar.");
 		}
-		else if (campo.equals("desc")){
-			this.fornecedores[indice].setDesc(novo_campo);
-			System.out.println("Descricao atualizada!");
-			return;
-		}
-		else if (campo.equals("telefone")){
-			this.fornecedores[indice].setTelefone(novo_campo);
-			System.out.println("Telefone atualizado!");
-			return;
-		}
-		else if (campo.equals("email")){
-			this.fornecedores[indice].setEmail(novo_campo);
-			System.out.println("Email atualizado!");
-			return;
+	}
+
+	public void EditarFornecedor(int id, String campo, int novo_campo){
+		int indice = BuscaIndice(id, 'F');
+
+		switch (campo){
+			case "numero":
+				this.fornecedores[indice].setNumero(novo_campo);
+				System.out.println("Número atualizado!");
+				return;
+			default:
+				System.out.println("Campo inválido, erro ao atualizar.");
 		}
 	}
 	
@@ -74,19 +107,26 @@ public class Loja {
 			String desc = this.fornecedores[i].getDesc();
 			String tel = this.fornecedores[i].getTelefone();
 			String email = this.fornecedores[i].getEmail();
-			System.out.println("Id: " + id + " - Nome: " + nome + ", Descricao: " + desc + ", Telefone: " + tel + ", Email: " + email);
+			String endereco = this.fornecedores[i].getEndereco().MostrarEnderecoFormatado();
+			System.out.println("Id: " + id + " - Nome: " + nome + ", Descricao: " + desc + ", Telefone: " + tel + ", Email: " + email + ", Endereço: " + endereco);
 		}
 	}
 
 	public void MostraFornecedores(int id) {
-		int indice = BuscaIndice(id, 'F');
+		if (!IdValido(id, 'F')){
+			System.out.println("Id inválido.");
+			return;
+		}
 
 		if (this.quantosFornecedores == 0) {
 			System.out.println("Nenhum fornecedor a ser exibido.");
 			return;
 		}
+
+		int indice = BuscaIndice(id, 'F');
 		Fornecedor f = this.fornecedores[indice];
-		System.out.println("Id: " + f.getId() + " - Nome: " + f.getNome() + ", Descricao: " + f.getDesc() + ", Telefone: " + f.getTelefone() + ", Email: " + f.getEmail());
+		String endereco = this.fornecedores[indice].getEndereco().MostrarEnderecoFormatado();
+		System.out.println("Id: " + f.getId() + " - Nome: " + f.getNome() + ", Descricao: " + f.getDesc() + ", Telefone: " + f.getTelefone() + ", Email: " + f.getEmail() + ", Endereço: " + endereco);
 	}
 
 	public void MostraFornecedores(String busca) {
@@ -94,17 +134,28 @@ public class Loja {
 			System.out.println("Nenhum fornecedor a ser exibido.");
 			return;
 		}
+
+		boolean achou = false;
+
 		for (int i=0; i<this.quantosFornecedores; i++) {
 			String nome = this.fornecedores[i].getNome();
 			if (nome.toLowerCase().contains(busca.toLowerCase())){
+				achou = true;
 				int id = this.fornecedores[i].getId();
 				String desc = this.fornecedores[i].getDesc();
 				String tel = this.fornecedores[i].getTelefone();
 				String email = this.fornecedores[i].getEmail();
-				System.out.println("Id: " + id + " - Nome: " + nome + ", Descricao: " + desc + ", Telefone: " + tel + ", Email: " + email);
+				String endereco = this.fornecedores[i].getEndereco().MostrarEnderecoFormatado();
+				System.out.println("Id: " + id + " - Nome: " + nome + ", Descricao: " + desc + ", Telefone: " + tel + ", Email: " + email + ", Endereço: " + endereco);
 			}
 
 		}
+
+		if (!achou) {
+			System.out.println("Nenhum fornecedor encontrado.");
+			return;
+		}
+
 	}
 
 	public int getQuantosFornecedores() {
@@ -189,7 +240,8 @@ public class Loja {
 			String nome = this.produtos[i].getNome();
 			String desc = this.produtos[i].getDesc();
 			float estoque = this.produtos[i].getEstoque();
-			System.out.println("Id: " + id + " - Nome: " + nome + ", Descricao: " + desc + ", Estoque: " + estoque);
+			int id_forn = this.produtos[i].getIdFornecedor();
+			System.out.println("Id: " + id + " - Nome: " + nome + ", Descricao: " + desc + ", Estoque: " + estoque + ", Fornecedor: " + id_forn);
 		}
 	}
 
@@ -204,7 +256,8 @@ public class Loja {
 				String nome = this.produtos[i].getNome();
 				String desc = this.produtos[i].getDesc();
 				float estoque = this.produtos[i].getEstoque();
-				System.out.println("Id: " + id + " - Nome: " + nome + ", Descricao: " + desc + ", Estoque: " + estoque);
+				int id_forn = this.produtos[i].getIdFornecedor();
+				System.out.println("Id: " + id + " - Nome: " + nome + ", Descricao: " + desc + ", Estoque: " + estoque + ", Fornecedor: " + id_forn);
 			}
 		}
 	}
@@ -220,8 +273,8 @@ public class Loja {
 				int id = this.produtos[i].getId();
 				String desc = this.produtos[i].getDesc();
 				float estoque = this.produtos[i].getEstoque();
-				int id_fornecedor = this.fornecedores[BuscaIndice(this.produtos[i].getIdFornecedor(), 'F')].getId();
-				System.out.println("Id: " + id + " - Nome: " + nome + ", Descricao: " + desc + ", Estoque: " + estoque + ", ID Fornecedor: " + id_fornecedor);
+				int id_forn = this.produtos[i].getIdFornecedor();
+				System.out.println("Id: " + id + " - Nome: " + nome + ", Descricao: " + desc + ", Estoque: " + estoque + ", Fornecedor: " + id_forn);
 			}
 		}
 	}
