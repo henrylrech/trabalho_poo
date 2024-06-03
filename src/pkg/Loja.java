@@ -267,6 +267,9 @@ public class Loja {
 			System.out.println("Nenhum produto a ser exibido.");
 			return;
 		}
+
+		boolean achou = false;
+
 		for (int i=0; i<this.quantosProdutos; i++) {
 			String nome = this.produtos[i].getNome();
 			if (nome.toLowerCase().contains(busca.toLowerCase())){
@@ -276,6 +279,11 @@ public class Loja {
 				int id_forn = this.produtos[i].getIdFornecedor();
 				System.out.println("Id: " + id + " - Nome: " + nome + ", Descricao: " + desc + ", Estoque: " + estoque + ", Fornecedor: " + id_forn);
 			}
+		}
+
+		if (!achou) {
+			System.out.println("Nenhum produto encontrado.");
+			return;
 		}
 	}
 
