@@ -188,12 +188,6 @@ public class Main {
 		int opcao = sc.nextInt();
 		sc.nextLine();
 
-		if (opcao < 1 || opcao > 6) {
-			System.out.println("Opção inválida.");
-			sc.nextLine();
-			return;
-		}
-
 		String str;
 		int num;
 
@@ -477,12 +471,6 @@ public class Main {
 		System.out.println("4 - Editar TODOS");
 		int opcao = sc.nextInt();
 		sc.nextLine();
-
-		if (opcao < 1 || opcao > 4) {
-			System.out.println("Opção inválida.");
-			sc.nextLine();
-			return;
-		}
 
 		String str;
 		int num;

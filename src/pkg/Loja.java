@@ -158,21 +158,19 @@ public class Loja {
 
 	}
 
-	public int getQuantosFornecedores() {
-		return quantosFornecedores;
-	}
+	public int getQuantosFornecedores() { return quantosFornecedores; }
 
 	//
 	// PRODUTOS
 	//
 
 	public void EditaEstoqueProduto(int id, float quantidade) {
-		int indice = BuscaIndice(id, 'P');
-
-		if (indice == -1){
-			System.out.println("Erro. Não foi encontrado produto com ID " + id);
+		if (!IdValido(id, 'P')){
+			System.out.println("Não foi encontrado produto com ID " + id);
 			return;
 		}
+
+		int indice = BuscaIndice(id, 'P');
 
 		if (this.produtos[indice].getEstoque() + quantidade < 0){
 			System.out.println("Estoque insuciente. O produto " + this.produtos[indice].getId() + " tem estoque igual a " + this.produtos[indice].getEstoque());
