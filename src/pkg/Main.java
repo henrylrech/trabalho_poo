@@ -56,7 +56,7 @@ public class Main {
 			System.out.println(" 2 - Editar fornecedor");
 			System.out.println(" 3 - Excluir fornecedor");
 			System.out.println(" 4 - Consultar fornecedores");
-			System.out.println(" 5 - Voltar");
+			System.out.println(" 9 - Voltar");
 			System.out.println(" 0 - Sair ");
 			opcao = sc.nextInt();
 			sc.nextLine();
@@ -73,7 +73,7 @@ public class Main {
 				case 4:
 					ConsultaFornecedores();
 					break;
-				case 5:
+				case 9:
 					MostraMenu();
 					break;
 				case 0:
@@ -81,7 +81,7 @@ public class Main {
 					System.exit(0);
 			}
 			System.out.println("---------------------------------------------");
-		} while (opcao != 5 && opcao != 0);
+		} while (opcao != 9 && opcao != 0);
 		sc.close();
 	}
 
@@ -96,7 +96,7 @@ public class Main {
 			System.out.println(" 3 - Excluir produto");
 			System.out.println(" 4 - Consultar produtos");
 			System.out.println(" 5 - Alterar estoque de produto");
-			System.out.println(" 6 - Voltar");
+			System.out.println(" 9 - Voltar");
 			System.out.println(" 0 - Sair ");
 			opcao = sc.nextInt();
 			sc.nextLine();
@@ -116,7 +116,7 @@ public class Main {
 				case 5:
 					EditaEstoque();
 					break;
-				case 6:
+				case 9:
 					MostraMenu();
 					break;
 				case 0:
@@ -124,7 +124,7 @@ public class Main {
 					System.exit(0);
 			}
 			System.out.println("---------------------------------------------");
-		} while (opcao != 6 && opcao != 0);
+		} while (opcao != 9 && opcao != 0);
 		sc.close();
 	}
 
@@ -243,7 +243,8 @@ public class Main {
 				case 2:
 					System.out.println("Digite o numero novo: ");
 					num = sc.nextInt();
-					while (num == 0) { num = sc.nextInt(); }
+					sc.nextLine();
+					while (num == 0) { num = sc.nextInt(); sc.nextLine(); }
 					loja.EditarFornecedor(id, "numero", num);
 					break;
 				case 3:
@@ -278,7 +279,8 @@ public class Main {
 
 					System.out.println("Digite o numero novo: ");
 					num = sc.nextInt();
-					while (num == 0) { num = sc.nextInt(); }
+					sc.nextLine();
+					while (num == 0) { num = sc.nextInt(); sc.nextLine(); }
 					loja.EditarFornecedor(id, "numero", num);
 
 					System.out.println("Digite o bairro novo: ");
@@ -300,6 +302,9 @@ public class Main {
 					str = sc.nextLine();
 					while (str.isEmpty()) { str = sc.nextLine(); }
 					loja.EditarFornecedor(id, "estado", str);
+					break;
+				default:
+					System.out.println("Opção inválida.");
 					break;
 			}
 			break;
@@ -527,7 +532,7 @@ public class Main {
 				break;
 			default:
 				System.out.println("Opção inválida.");
-				break;
+				return;
 		}
 
 		sc.nextLine();
@@ -540,14 +545,13 @@ public class Main {
 			return;
 		}
 
-		loja.MostraFornecedores();
+		loja.MostraProdutos();
 		System.out.println("---------------------------------------------");
 		System.out.println("Deseja excluir o produto com qual id?");
 		int id = sc.nextInt();
-
+		sc.nextLine();
 		if (!loja.IdValido(id, 'P')) {
 			System.out.println("Id inválido.");
-			sc.nextLine();
 			return;
 		}
 
