@@ -13,12 +13,15 @@ public class Main {
 		main.MostraMenu();
 	}
 
-	public void Inicia() {
-		loja.IncluiFornecedor(new Fornecedor("Henry","Fornecedor","99999999","email@email.com"));
+	private void Inicia() {
+		Endereco e = new Endereco("Rua 1", 420, "Lagoinha", "12345-678", "Caxias do Sul", "RS");
+		Endereco e2 = new Endereco("Rua 1", 420, "Lagoinha", "12345-678", "Caxias do Sul", "RS");
+		loja.IncluiFornecedor(new Fornecedor("Henry","Fornecedor","99999999","email@email.com", e));
 		loja.IncluiProduto(new Produto("Café", "Café Preto", 100, 1));
+		loja.IncluiCliente(new Cliente("Rodolfo","99999999","email@email.com", "5555555555", e2 ));
 	}
 
-	public void MostraMenu() {
+	private void MostraMenu() {
 		int opcao = 0;
 		sc = new Scanner(System.in);
 
@@ -26,6 +29,7 @@ public class Main {
 			System.out.println("Escolha a opção:");
 			System.out.println(" 1 - Menu Fornecedor");
 			System.out.println(" 2 - Menu Produtos");
+			System.out.println(" 3 - Menu Cliente");
 			System.out.println(" 0 - Sair ");
 			opcao = sc.nextInt();
 			sc.nextLine();
@@ -36,6 +40,9 @@ public class Main {
 				case 2:
 					MostraMenuProdutos();
 					break;
+				case 3:
+					MostraMenuCliente();
+					break;
 				case 0:
 					System.out.println("Saindo...");
 					System.exit(0);
@@ -44,8 +51,8 @@ public class Main {
 		} while (opcao != 0);
 		sc.close();
 	}
-
-	public void MostraMenuFornecedor(){
+	
+	private void MostraMenuFornecedor(){
 		int opcao = 0;
 		sc = new Scanner(System.in);
 
@@ -55,7 +62,7 @@ public class Main {
 			System.out.println(" 2 - Editar fornecedor");
 			System.out.println(" 3 - Excluir fornecedor");
 			System.out.println(" 4 - Consultar fornecedores");
-			System.out.println(" 5 - Voltar");
+			System.out.println(" 9 - Voltar");
 			System.out.println(" 0 - Sair ");
 			opcao = sc.nextInt();
 			sc.nextLine();
@@ -72,7 +79,7 @@ public class Main {
 				case 4:
 					ConsultaFornecedores();
 					break;
-				case 5:
+				case 9:
 					MostraMenu();
 					break;
 				case 0:
@@ -80,11 +87,11 @@ public class Main {
 					System.exit(0);
 			}
 			System.out.println("---------------------------------------------");
-		} while (opcao != 5 && opcao != 0);
+		} while (opcao != 9 && opcao != 0);
 		sc.close();
 	}
 
-	public void MostraMenuProdutos(){
+	private void MostraMenuProdutos(){
 		int opcao = 0;
 		sc = new Scanner(System.in);
 
@@ -95,7 +102,7 @@ public class Main {
 			System.out.println(" 3 - Excluir produto");
 			System.out.println(" 4 - Consultar produtos");
 			System.out.println(" 5 - Alterar estoque de produto");
-			System.out.println(" 6 - Voltar");
+			System.out.println(" 9 - Voltar");
 			System.out.println(" 0 - Sair ");
 			opcao = sc.nextInt();
 			sc.nextLine();
@@ -115,7 +122,7 @@ public class Main {
 				case 5:
 					EditaEstoque();
 					break;
-				case 6:
+				case 9:
 					MostraMenu();
 					break;
 				case 0:
@@ -123,9 +130,52 @@ public class Main {
 					System.exit(0);
 			}
 			System.out.println("---------------------------------------------");
-		} while (opcao != 6 && opcao != 0);
+		} while (opcao != 9 && opcao != 0);
 		sc.close();
 	}
+	
+	private void MostraMenuCliente(){
+		int opcao = 0;
+		sc = new Scanner(System.in);
+
+		do {
+			System.out.println("Escolha a opção:");
+			System.out.println(" 1 - Criar um cliente");
+			System.out.println(" 2 - Editar cliente");
+			System.out.println(" 3 - Excluir cliente");
+			System.out.println(" 4 - Consultar cliente");
+			System.out.println(" 9 - Voltar");
+			System.out.println(" 0 - Sair ");
+			opcao = sc.nextInt();
+			sc.nextLine();
+			switch (opcao) {
+				case 1:
+					CriaCliente();
+					break;
+				case 2:
+					EditaCliente();
+					break;
+				case 3:
+					ExcluiCliente();
+					break;
+				case 4:
+					ConsultaClientes();
+					break;
+				case 9:
+					MostraMenu();
+					break;
+				case 0:
+					System.out.println("Saindo...");
+					System.exit(0);
+			}
+			System.out.println("---------------------------------------------");
+		} while (opcao != 9 && opcao != 0);
+		sc.close();
+	}
+
+	//
+	// FORNECEDOR
+	//
 
 	private void CriaFornecedor() {
 		System.out.println("Diga o nome do fornecedor: ");
@@ -136,8 +186,21 @@ public class Main {
 		String tele = sc.nextLine();
 		System.out.println("Diga o email do fornecedor: ");
 		String email = sc.nextLine();
+		System.out.println("Diga o numero da casa/apartamento do fornecedor: ");
+		int numero = sc.nextInt();
+		sc.nextLine();
+		System.out.println("Diga a rua do fornecedor: ");
+		String rua = sc.nextLine();
+		System.out.println("Diga o bairro do fornecedor: ");
+		String bairro = sc.nextLine();
+		System.out.println("Diga o cep do fornecedor: ");
+		String cep = sc.nextLine();
+		System.out.println("Diga a cidade do fornecedor: ");
+		String cidade = sc.nextLine();
+		System.out.println("Diga o estado do fornecedor: ");
+		String estado = sc.nextLine();
 		
-		Fornecedor f = new Fornecedor(nome,desc,tele,email);
+		Fornecedor f = new Fornecedor(nome,desc,tele,email,new Endereco(rua, numero, bairro, cep, cidade, estado));
 		loja.IncluiFornecedor(f);
 		sc.nextLine();
 	}
@@ -154,7 +217,7 @@ public class Main {
 		System.out.println("Deseja editar o fornecedor com qual id?");
 		int id = sc.nextInt();
 		
-		if (loja.IdValido(id, 'F')) {
+		if (!loja.IdValido(id, 'F')) {
 			System.out.println("Id inválido.");
 			sc.nextLine();
 			return;
@@ -165,51 +228,181 @@ public class Main {
 		System.out.println("2 - Editar descricao");
 		System.out.println("3 - Editar telefone");
 		System.out.println("4 - Editar email");
+		System.out.println("5 - Editar endereço");
+		System.out.println("6 - Editar TODOS");
 		int opcao = sc.nextInt();
 		sc.nextLine();
 
-		if (opcao < 1 || opcao > 4) {
-			System.out.println("Opção inválida.");
-			sc.nextLine();
-			return;
-		}
+		String str;
+		int num;
 
-		Fornecedor temp = loja.getFornecedor(id);
 		switch (opcao) {
 		case 1:
 			System.out.println("Digite o nome novo: ");
-			String nome = sc.nextLine();
-			if (nome.isEmpty()) { nome = sc.nextLine(); }
-			temp.setNome(nome);
-			System.out.println("Nome atualizado!");
+			str = sc.nextLine();
+			while (str.isEmpty()) { str = sc.nextLine(); }
+			loja.EditarFornecedor(id, "nome", str);
 			break;
 		case 2:
 			System.out.println("Digite a descricao nova: ");
-			String desc = sc.nextLine();
-			while (desc.isEmpty()) { desc = sc.nextLine(); }
-			temp.setDesc(desc);
-			System.out.println("Descricao atualizada!");
+			str = sc.nextLine();
+			while (str.isEmpty()) { str = sc.nextLine(); }
+			loja.EditarFornecedor(id, "desc", str);
 			break;
 		case 3:
 			System.out.println("Digite o telefone novo: ");
-			String tele = sc.nextLine();
-			while (tele.isEmpty()) { tele = sc.nextLine(); }
-			temp.setTelefone(tele);
-			System.out.println("Telefone atualizado!");
+			str = sc.nextLine();
+			while (str.isEmpty()) { str = sc.nextLine(); }
+			loja.EditarFornecedor(id, "telefone", str);
 			break;
 		case 4:
 			System.out.println("Digite o email novo: ");
-			String email = sc.nextLine();
-			while (email.isEmpty()) { email = sc.nextLine(); }
-			temp.setEmail(email);
-			System.out.println("Email atualizado!");
+			str = sc.nextLine();
+			while (str.isEmpty()) { str = sc.nextLine(); }
+			loja.EditarFornecedor(id, "email", str);
 			break;
+		case 5:
+			System.out.println("Escolha a opção");
+			System.out.println("1 - Editar rua");
+			System.out.println("2 - Editar numero");
+			System.out.println("3 - Editar bairro");
+			System.out.println("4 - Editar cep");
+			System.out.println("5 - Editar cidade");
+			System.out.println("6 - Editar estado");
+			System.out.println("7 - Editar TODOS");
+			opcao = sc.nextInt();
+
+			switch (opcao){
+				case 1:
+					System.out.println("Digite a rua nova: ");
+					str = sc.nextLine();
+					while (str.isEmpty()) { str = sc.nextLine(); }
+					loja.EditarFornecedor(id, "rua", str);
+					break;
+				case 2:
+					System.out.println("Digite o numero novo: ");
+					num = sc.nextInt();
+					sc.nextLine();
+					while (num == 0) { num = sc.nextInt(); sc.nextLine(); }
+					loja.EditarFornecedor(id, "numero", num);
+					break;
+				case 3:
+					System.out.println("Digite o bairro novo: ");
+					str = sc.nextLine();
+					while (str.isEmpty()) { str = sc.nextLine(); }
+					loja.EditarFornecedor(id, "bairro", str);
+					break;
+				case 4:
+					System.out.println("Digite o CEP novo: ");
+					str = sc.nextLine();
+					while (str.isEmpty()) { str = sc.nextLine(); }
+					loja.EditarFornecedor(id, "cep", str);
+					break;
+				case 5:
+					System.out.println("Digite a cidade nova: ");
+					str = sc.nextLine();
+					while (str.isEmpty()) { str = sc.nextLine(); }
+					loja.EditarFornecedor(id, "cidade", str);
+					break;
+				case 6:
+					System.out.println("Digite o estado novo: ");
+					str = sc.nextLine();
+					while (str.isEmpty()) { str = sc.nextLine(); }
+					loja.EditarFornecedor(id, "estado", str);
+					break;
+				case 7:
+					System.out.println("Digite a rua nova: ");
+					str = sc.nextLine();
+					while (str.isEmpty()) { str = sc.nextLine(); }
+					loja.EditarFornecedor(id, "rua", str);
+
+					System.out.println("Digite o numero novo: ");
+					num = sc.nextInt();
+					sc.nextLine();
+					while (num == 0) { num = sc.nextInt(); sc.nextLine(); }
+					loja.EditarFornecedor(id, "numero", num);
+
+					System.out.println("Digite o bairro novo: ");
+					str = sc.nextLine();
+					while (str.isEmpty()) { str = sc.nextLine(); }
+					loja.EditarFornecedor(id, "bairro", str);
+
+					System.out.println("Digite o CEP novo: ");
+					str = sc.nextLine();
+					while (str.isEmpty()) { str = sc.nextLine(); }
+					loja.EditarFornecedor(id, "cep", str);
+
+					System.out.println("Digite a cidade nova: ");
+					str = sc.nextLine();
+					while (str.isEmpty()) { str = sc.nextLine(); }
+					loja.EditarFornecedor(id, "cidade", str);
+
+					System.out.println("Digite o estado novo: ");
+					str = sc.nextLine();
+					while (str.isEmpty()) { str = sc.nextLine(); }
+					loja.EditarFornecedor(id, "estado", str);
+					break;
+				default:
+					System.out.println("Opção inválida.");
+					break;
+			}
+			break;
+		case 6:
+			System.out.println("Digite o nome novo: ");
+			str = sc.nextLine();
+			while (str.isEmpty()) { str = sc.nextLine(); }
+			loja.EditarFornecedor(id, "nome", str);
+
+			System.out.println("Digite a descricao nova: ");
+			str = sc.nextLine();
+			while (str.isEmpty()) { str = sc.nextLine(); }
+			loja.EditarFornecedor(id, "desc", str);
+
+			System.out.println("Digite o telefone novo: ");
+			str = sc.nextLine();
+			while (str.isEmpty()) { str = sc.nextLine(); }
+			loja.EditarFornecedor(id, "telefone", str);
+
+			System.out.println("Digite o email novo: ");
+			str = sc.nextLine();
+			while (str.isEmpty()) { str = sc.nextLine(); }
+			loja.EditarFornecedor(id, "email", str);
+
+			System.out.println("Digite a rua nova: ");
+			str = sc.nextLine();
+			while (str.isEmpty()) { str = sc.nextLine(); }
+			loja.EditarFornecedor(id, "rua", str);
+
+			System.out.println("Digite o numero novo: ");
+			num = sc.nextInt();
+			while (num == 0) { num = sc.nextInt(); }
+			loja.EditarFornecedor(id, "numero", num);
+
+			System.out.println("Digite o bairro novo: ");
+			str = sc.nextLine();
+			while (str.isEmpty()) { str = sc.nextLine(); }
+			loja.EditarFornecedor(id, "bairro", str);
+
+			System.out.println("Digite o CEP novo: ");
+			str = sc.nextLine();
+			while (str.isEmpty()) { str = sc.nextLine(); }
+			loja.EditarFornecedor(id, "cep", str);
+
+			System.out.println("Digite a cidade nova: ");
+			str = sc.nextLine();
+			while (str.isEmpty()) { str = sc.nextLine(); }
+			loja.EditarFornecedor(id, "cidade", str);
+
+			System.out.println("Digite o estado novo: ");
+			str = sc.nextLine();
+			while (str.isEmpty()) { str = sc.nextLine(); }
+			loja.EditarFornecedor(id, "estado", str);
+			break;
+
 		default:
 			System.out.println("Opção inválida.");
-			return;
+			break;
 		}
-
-		loja.setFornecedor(id, temp);
 
 		sc.nextLine();
 	}
@@ -226,7 +419,7 @@ public class Main {
 		System.out.println("Deseja excluir o fornecedor com qual id?");
 		int id = sc.nextInt();
 		
-		if (loja.IdValido(id, 'F') == false) {
+		if (!loja.IdValido(id, 'F')) {
 			System.out.println("Id inválido.");
 			sc.nextLine();
 			return;
@@ -256,6 +449,7 @@ public class Main {
 			case 3:
 				System.out.println("Escolha o id a ser buscado: ");
 				int id = sc.nextInt();
+				sc.nextLine();
 				loja.MostraFornecedores(id);
 				break;
 			default:
@@ -265,6 +459,10 @@ public class Main {
 
 		sc.nextLine();
 	}
+
+	//
+	// PRODUTO
+	//
 
 	private void CriaProduto() {
 		if (loja.getQuantosFornecedores() == 0) {
@@ -280,11 +478,11 @@ public class Main {
 		System.out.println("Diga o estoque inicial do produto: ");
 		float estoque = sc.nextFloat();
 		loja.MostraFornecedores();
-		System.out.println("Diga o indice do fornecedor responsável: ");
+		System.out.println("Diga o id do fornecedor responsável: ");
 		int id_forn = sc.nextInt();
 
-		while (loja.IdValido(id_forn, 'F') == false) {
-			System.out.println("Indice de fornecedor inválido. Digite novamente. ");
+		while (!loja.IdValido(id_forn, 'F')) {
+			System.out.println("Id de fornecedor inválido. Digite novamente. ");
 			id_forn = sc.nextInt();
 		}
 
@@ -305,7 +503,7 @@ public class Main {
 		System.out.println("Deseja editar o produto com qual id?");
 		int id = sc.nextInt();
 
-		if (loja.IdValido(id, 'P') == false) {
+		if (!loja.IdValido(id, 'P')) {
 			System.out.println("Id inválido.");
 			sc.nextLine();
 			return;
@@ -315,49 +513,60 @@ public class Main {
 		System.out.println("1 - Editar nome");
 		System.out.println("2 - Editar descricao");
 		System.out.println("3 - Editar fornecedor");
+		System.out.println("4 - Editar TODOS");
 		int opcao = sc.nextInt();
 		sc.nextLine();
 
-		if (opcao < 1 || opcao > 4) {
-			System.out.println("Opção inválida.");
-			sc.nextLine();
-			return;
-		}
-
-		Produto temp = loja.getProduto(id);
+		String str;
+		int num;
 
 		switch (opcao) {
 			case 1:
 				System.out.println("Digite o nome novo: ");
-				String nome = sc.nextLine();
-				if (nome.isEmpty()) { nome = sc.nextLine(); }
-				temp.setNome(nome);
-				System.out.println("Nome atualizado!");
+				str = sc.nextLine();
+				if (str.isEmpty()) { str = sc.nextLine(); }
+				loja.EditarProduto(id, "nome", str);
 				break;
 			case 2:
 				System.out.println("Digite a descricao nova: ");
-				String desc = sc.nextLine();
-				while (desc.isEmpty()) { desc = sc.nextLine(); }
-				temp.setDesc(desc);
-				System.out.println("Descricao atualizada!");
+				str = sc.nextLine();
+				while (str.isEmpty()) { str = sc.nextLine(); }
+				loja.EditarProduto(id, "desc", str);
 				break;
 			case 3:
 				loja.MostraFornecedores();
 				System.out.println("Digite o id de fornecedor novo: ");
-				int id_fornecedor = sc.nextInt();
-				while (loja.IdValido(id_fornecedor, 'F') == false) {
+				num = sc.nextInt();
+				while (!loja.IdValido(num, 'F')) {
 					System.out.println("Id de fornecedor inválido. Digite novamente. ");
-					id_fornecedor = sc.nextInt();
+					num = sc.nextInt();
 				}
-				temp.setId_fornecedor(id_fornecedor);
-				System.out.println("Id de fornecedor atualizado!");
+				loja.EditarProduto(id, "id_fornecedor", num);
+				break;
+			case 4:
+				System.out.println("Digite o nome novo: ");
+				str = sc.nextLine();
+				if (str.isEmpty()) { str = sc.nextLine(); }
+				loja.EditarProduto(id, "nome", str);
+
+				System.out.println("Digite a descricao nova: ");
+				str = sc.nextLine();
+				while (str.isEmpty()) { str = sc.nextLine(); }
+				loja.EditarProduto(id, "desc", str);
+
+				loja.MostraFornecedores();
+				System.out.println("Digite o id de fornecedor novo: ");
+				num = sc.nextInt();
+				while (!loja.IdValido(num, 'F')) {
+					System.out.println("Id de fornecedor inválido. Digite novamente. ");
+					num = sc.nextInt();
+				}
+				loja.EditarProduto(id, "id_fornecedor", num);
 				break;
 			default:
 				System.out.println("Opção inválida.");
 				return;
 		}
-
-		loja.setProduto(id, temp);
 
 		sc.nextLine();
 	}
@@ -369,14 +578,13 @@ public class Main {
 			return;
 		}
 
-		loja.MostraFornecedores();
+		loja.MostraProdutos();
 		System.out.println("---------------------------------------------");
 		System.out.println("Deseja excluir o produto com qual id?");
 		int id = sc.nextInt();
-
-		if (loja.IdValido(id, 'P') == false) {
+		sc.nextLine();
+		if (!loja.IdValido(id, 'P')) {
 			System.out.println("Id inválido.");
-			sc.nextLine();
 			return;
 		}
 
@@ -389,7 +597,7 @@ public class Main {
 		System.out.println("Escolha a opção");
 		System.out.println("1 - Mostrar todos");
 		System.out.println("2 - Filtrar por nome");
-		System.out.println("3 - Filtrar por índice");
+		System.out.println("3 - Filtrar por Id");
 		int opcao = sc.nextInt();
 		sc.nextLine();
 
@@ -405,18 +613,17 @@ public class Main {
 			case 3:
 				System.out.println("Escolha o id a ser buscado: ");
 				int id = sc.nextInt();
-				while (loja.IdValido(id, 'P') == false) {
+				sc.nextLine();
+				while (!loja.IdValido(id, 'P')) {
 					System.out.println("Id inválido.");
 					id = sc.nextInt();
 				}
-				
 				loja.MostraProdutos(id);
 				break;
 			default:
 				System.out.println("Opção inválida.");
 				return;
 		}
-
 		sc.nextLine();
 	}
 
@@ -431,7 +638,7 @@ public class Main {
 		System.out.println("Digite o ID do produto: ");
 		int id = sc.nextInt();
 		
-		while (loja.IdValido(id, 'P') == false) {
+		while (!loja.IdValido(id, 'P')) {
 			System.out.println("Id inválido");
 			id = sc.nextInt();
 		}
@@ -454,10 +661,298 @@ public class Main {
 				quantidade = sc.nextFloat();
 				quantidade = quantidade * -1;
 				loja.EditaEstoqueProduto(id, quantidade);
+				break;
 			default:
 				System.out.println("Opção inválida.");
 				return;
-			
 		}
+	}
+	
+	//
+	// CLIENTE
+	//
+
+	private void CriaCliente() {
+
+		System.out.println("Diga o nome do Cliente: ");
+		String nome = sc.nextLine();
+		System.out.println("Diga o telefone do Cliente: ");
+		String tele = sc.nextLine();
+		System.out.println("Diga o email do Cliente: ");
+		String email = sc.nextLine();
+		System.out.println("Diga o Cartão de Credito do Cliente: ");
+		String cc = sc.nextLine();
+		System.out.println("Diga o numero da casa/apartamento do Cliente: ");
+		int numero = sc.nextInt();
+		sc.nextLine();
+		System.out.println("Diga a rua do Cliente: ");
+		String rua = sc.nextLine();
+		System.out.println("Diga o bairro do Cliente: ");
+		String bairro = sc.nextLine();
+		System.out.println("Diga o cep do Cliente: ");
+		String cep = sc.nextLine();
+		System.out.println("Diga a cidade do Cliente: ");
+		String cidade = sc.nextLine();
+		System.out.println("Diga o estado do Cliente: ");
+		String estado = sc.nextLine();
+		
+		Cliente c = new Cliente(nome,tele,email,cc,new Endereco(rua, numero, bairro, cep, cidade, estado));
+		loja.IncluiCliente(c);
+		sc.nextLine();
+	}
+
+	private void ConsultaClientes() {
+		System.out.println("---------------------------------------------");
+		System.out.println("Escolha a opção");
+		System.out.println("1 - Mostrar todos");
+		System.out.println("2 - Filtrar por nome");
+		System.out.println("3 - Filtrar por id");
+		int opcao = sc.nextInt();
+		sc.nextLine();
+		switch (opcao) {
+			case 1:
+				loja.MostraClientes();
+				break;
+			case 2:
+				System.out.println("Escolha o nome a ser buscado: ");
+				String busca = sc.nextLine();
+				loja.MostraClientes(busca);
+				break;
+			case 3:
+				System.out.println("Escolha o id a ser buscado: ");
+				int id = sc.nextInt();
+				sc.nextLine();
+				loja.MostraClientes(id);
+				break;
+			default:
+				System.out.println("Opção inválida.");
+				return;
+		}
+
+		sc.nextLine();
+	}
+
+	private void ExcluiCliente() {
+		if (loja.getQuantosClientes() == 0) {
+			System.out.println("Nenhum cliente a ser exibido.");
+			sc.nextLine();
+			return;
+		}
+		
+		loja.MostraClientes();
+		System.out.println("---------------------------------------------");
+		System.out.println("Deseja excluir o cliente com qual id?");
+		int id = sc.nextInt();
+		
+		if (!loja.IdValido(id, 'C')) {
+			System.out.println("Id inválido.");
+			sc.nextLine();
+			return;
+		}
+		
+		loja.ExcluirCliente(id);
+		sc.nextLine();
+	}
+	
+	private void EditaCliente() {
+		if (loja.getQuantosClientes() == 0) {
+			System.out.println("Nenhum cliente a ser exibido.");
+			sc.nextLine();
+			return;
+		}
+		
+		loja.MostraClientes();
+		System.out.println("---------------------------------------------");
+		System.out.println("Deseja editar o cliente com qual id?");
+		int id = sc.nextInt();
+		
+		if (!loja.IdValido(id, 'C')) {
+			System.out.println("Id inválido.");
+			sc.nextLine();
+			return;
+		}
+		
+		System.out.println("Escolha a opção");
+		System.out.println("1 - Editar nome");
+		System.out.println("2 - Editar telefone");
+		System.out.println("3 - Editar email");
+		System.out.println("4 - Editar cartão de credito");
+		System.out.println("5 - Editar endereço");
+		System.out.println("6 - Editar TODOS");
+		int opcao = sc.nextInt();
+		sc.nextLine();
+
+		String str;
+		int num;
+
+		switch (opcao) {
+		case 1:
+			System.out.println("Digite o nome novo: ");
+			str = sc.nextLine();
+			while (str.isEmpty()) { str = sc.nextLine(); }
+			loja.EditarCliente(id, "nome", str);
+			break;
+		case 2:
+			System.out.println("Digite o telefone novo: ");
+			str = sc.nextLine();
+			while (str.isEmpty()) { str = sc.nextLine(); }
+			loja.EditarCliente(id, "telefone", str);
+			break;
+		case 3:
+			System.out.println("Digite o email novo: ");
+			str = sc.nextLine();
+			while (str.isEmpty()) { str = sc.nextLine(); }
+			loja.EditarCliente(id, "email", str);
+			break;
+		case 4:
+			System.out.println("Digite o cartão de credito novo: ");
+			str = sc.nextLine();
+			while (str.isEmpty()) { str = sc.nextLine(); }
+			loja.EditarCliente(id, "cc", str);
+			break;
+		case 5:
+			System.out.println("Escolha a opção");
+			System.out.println("1 - Editar rua");
+			System.out.println("2 - Editar numero");
+			System.out.println("3 - Editar bairro");
+			System.out.println("4 - Editar cep");
+			System.out.println("5 - Editar cidade");
+			System.out.println("6 - Editar estado");
+			System.out.println("7 - Editar TODOS");
+			opcao = sc.nextInt();
+
+			switch (opcao){
+				case 1:
+					System.out.println("Digite a rua nova: ");
+					str = sc.nextLine();
+					while (str.isEmpty()) { str = sc.nextLine(); }
+					loja.EditarCliente(id, "rua", str);
+					break;
+				case 2:
+					System.out.println("Digite o numero novo: ");
+					num = sc.nextInt();
+					sc.nextLine();
+					while (num == 0) { num = sc.nextInt(); sc.nextLine(); }
+					loja.EditarCliente(id, "numero", num);
+					break;
+				case 3:
+					System.out.println("Digite o bairro novo: ");
+					str = sc.nextLine();
+					while (str.isEmpty()) { str = sc.nextLine(); }
+					loja.EditarCliente(id, "bairro", str);
+					break;
+				case 4:
+					System.out.println("Digite o CEP novo: ");
+					str = sc.nextLine();
+					while (str.isEmpty()) { str = sc.nextLine(); }
+					loja.EditarCliente(id, "cep", str);
+					break;
+				case 5:
+					System.out.println("Digite a cidade nova: ");
+					str = sc.nextLine();
+					while (str.isEmpty()) { str = sc.nextLine(); }
+					loja.EditarCliente(id, "cidade", str);
+					break;
+				case 6:
+					System.out.println("Digite o estado novo: ");
+					str = sc.nextLine();
+					while (str.isEmpty()) { str = sc.nextLine(); }
+					loja.EditarCliente(id, "estado", str);
+					break;
+				case 7:
+					System.out.println("Digite a rua nova: ");
+					str = sc.nextLine();
+					while (str.isEmpty()) { str = sc.nextLine(); }
+					loja.EditarCliente(id, "rua", str);
+
+					System.out.println("Digite o numero novo: ");
+					num = sc.nextInt();
+					sc.nextLine();
+					while (num == 0) { num = sc.nextInt(); sc.nextLine(); }
+					loja.EditarCliente(id, "numero", num);
+
+					System.out.println("Digite o bairro novo: ");
+					str = sc.nextLine();
+					while (str.isEmpty()) { str = sc.nextLine(); }
+					loja.EditarCliente(id, "bairro", str);
+
+					System.out.println("Digite o CEP novo: ");
+					str = sc.nextLine();
+					while (str.isEmpty()) { str = sc.nextLine(); }
+					loja.EditarCliente(id, "cep", str);
+
+					System.out.println("Digite a cidade nova: ");
+					str = sc.nextLine();
+					while (str.isEmpty()) { str = sc.nextLine(); }
+					loja.EditarCliente(id, "cidade", str);
+
+					System.out.println("Digite o estado novo: ");
+					str = sc.nextLine();
+					while (str.isEmpty()) { str = sc.nextLine(); }
+					loja.EditarCliente(id, "estado", str);
+					break;
+				default:
+					System.out.println("Opção inválida.");
+					break;
+			}
+			break;
+		case 6:
+			System.out.println("Digite o nome novo: ");
+			str = sc.nextLine();
+			while (str.isEmpty()) { str = sc.nextLine(); }
+			loja.EditarCliente(id, "nome", str);
+
+			System.out.println("Digite o telefone novo: ");
+			str = sc.nextLine();
+			while (str.isEmpty()) { str = sc.nextLine(); }
+			loja.EditarCliente(id, "telefone", str);
+
+			System.out.println("Digite o email novo: ");
+			str = sc.nextLine();
+			while (str.isEmpty()) { str = sc.nextLine(); }
+			loja.EditarCliente(id, "email", str);
+			
+			System.out.println("Digite o cartão de credito novo: ");
+			str = sc.nextLine();
+			while (str.isEmpty()) { str = sc.nextLine(); }
+			loja.EditarCliente(id, "cc", str);
+
+			System.out.println("Digite a rua nova: ");
+			str = sc.nextLine();
+			while (str.isEmpty()) { str = sc.nextLine(); }
+			loja.EditarCliente(id, "rua", str);
+
+			System.out.println("Digite o numero novo: ");
+			num = sc.nextInt();
+			while (num == 0) { num = sc.nextInt(); }
+			loja.EditarCliente(id, "numero", num);
+
+			System.out.println("Digite o bairro novo: ");
+			str = sc.nextLine();
+			while (str.isEmpty()) { str = sc.nextLine(); }
+			loja.EditarCliente(id, "bairro", str);
+
+			System.out.println("Digite o CEP novo: ");
+			str = sc.nextLine();
+			while (str.isEmpty()) { str = sc.nextLine(); }
+			loja.EditarCliente(id, "cep", str);
+
+			System.out.println("Digite a cidade nova: ");
+			str = sc.nextLine();
+			while (str.isEmpty()) { str = sc.nextLine(); }
+			loja.EditarCliente(id, "cidade", str);
+
+			System.out.println("Digite o estado novo: ");
+			str = sc.nextLine();
+			while (str.isEmpty()) { str = sc.nextLine(); }
+			loja.EditarCliente(id, "estado", str);
+			break;
+
+		default:
+			System.out.println("Opção inválida.");
+			break;
+		}
+
+		sc.nextLine();
 	}
 }
