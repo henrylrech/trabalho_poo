@@ -1,18 +1,27 @@
 package pkg;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class Produto {
     private static int count = 0;
     private int id;
-    private int id_fornecedor;
-    private String nome;
+    
+    @JsonIgnore
+    private Fornecedor fornecedor;
+
+	private String nome;
     private String desc;
     private float estoque;
+    private double preco;
+    
+    public Produto() {}
 
-    public Produto(String nome, String desc, float estoque, int id_fornecedor) {
+    public Produto(String nome, String desc, Fornecedor f, float estoque, double preco) {
         this.nome = nome;
         this.desc = desc;
+        this.fornecedor = f;
         this.estoque = estoque;
-        this.id_fornecedor = id_fornecedor;
+        this.preco = preco;
         this.id = ++count;
     }
 
@@ -36,10 +45,45 @@ public class Produto {
 
     public void setEstoque(float estoque) { this.estoque = estoque; }
 
-    public void setId_fornecedor(int id_fornecedor) { this.id_fornecedor = id_fornecedor; }
+    @JsonIgnore
+    public void setFornecedor(Fornecedor f) { this.fornecedor = f; }
 
     public int getId() { return this.id; }
     
-    public int getIdFornecedor() { return this.id_fornecedor; }
+    @JsonIgnore
+    public Fornecedor getFornecedor() { return this.fornecedor; }
+    
+    @JsonIgnore
+    public int getIdFornecedor() { return this.fornecedor.getId(); }
 
+    public double getPreco() {
+        return preco;
+    }
+
+    public void setPreco(double preco) {
+        this.preco = preco;
+    }        
+
+    @JsonIgnore
+    public boolean isDisponivel() {
+        return this.estoque > 0;
+    }
+    
+    public static int getCount() {
+		return count;
+	}
+
+	public static void setCount(int count) {
+		Produto.count = count;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+    public void reduzirEstoque(float quantidade) {
+        if (quantidade <= this.estoque) {
+            this.estoque -= quantidade;
+        }
+    }
 }

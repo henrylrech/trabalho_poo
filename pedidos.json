@@ -1,0 +1,1 @@
+[{"numero":1,"dataPedido":1719973185919,"dataEntrega":1719973192609,"situacao":"Pedido entregue e finalizado.","itens":[{"produto":{"id":1,"nome":"Café","desc":"Café Preto","estoque":80.0,"preco":21.9},"quantidade":5}]}]
